@@ -41,40 +41,86 @@ router.get('/api/v1/public-scenarios',function(req ,res, next){
     });
 });
 
+function getDeleteCode() {
+    return String(Date.now()).slice(-5);
+}
+
+function getStateIdFromString(stateString = '') {
+    if(stateString === 'Niekompletny'){
+        return 0;
+    }else{
+        return 1;
+    }
+}
+
+function getPDF(docUINT8) {
+    return PDFJS.getDocument(docUINT8);
+}
+
+function createScenarioEntity(req, stateId, numberOfPages, deleteCode) {
+    const scenario = new PublicScenarios({
+        title: req.body.title,
+        authorEmail: req.body.authorEmail,
+        stateId,
+        description: req.body.description,
+        path: req.file.path,
+        pages: numberOfPages,
+        deleteCode
+    });
+    return scenario;
+}
+
 router.post('/new-scenario', uploadPDF.single('file'), function(req, res) {
+
     console.log("REQ.FILE: ", req.file);
     console.log("PRZYSŁANO NAM: ", req.body);
 
-    const pdfData = new Uint8Array(fs.readFileSync(req.file.path));
-
-    let stateId, deleteCode;
-    if(req.body.state === "Niekompletny"){
-      stateId = 0;
-    }else{
-      stateId = 1;
-    }
-
-    deleteCode = String(Date.now()).slice(-5);
-
-    PDFJS.getDocument(pdfData).then(function (pdfDocument) {
-        const numberOfPages = pdfDocument.numPages;
-        console.log("Number of pages: ", numberOfPages);
-
-        const scenario = new PublicScenarios({
-            title: req.body.title,
-            authorEmail: req.body.authorEmail,
-            stateId,
-            description: req.body.description,
-            path: req.file.path,
-            pages: numberOfPages,
-            deleteCode
-        });
+    const pdfData = new Uint8Array(fs.readFileSync(req.file.path)),
+          stateId = getStateIdFromString(req.body.state),
+          deleteCode = getDeleteCode(),
+          pdfDocumentReady = getPDF(pdfData);  // there should be fileSize, fileFormat validation
+    
+    pdfDocumentReady.then(pdfDocument => {
+        console.log('Document PDF: ', pdfDocument);
         
+        const scenario = createScenarioEntity(req, stateId, pdfDocument.numPages, deleteCode);
+
         scenario.save((err) => {
-            if (err) return console.log(err);
+            if (err) {
+                return console.log(err);
+            }
             res.send('Scenario saved!');
         });
+        
     });
+  
+    // let stateId, deleteCode;
+    // if(req.body.state === "Niekompletny"){
+    //   stateId = 0;
+    // }else{
+    //   stateId = 1;
+    // }
+    
+    // PDFJS.getDocument(pdfData).then(function (pdfDocument) {
+    //     const numberOfPages = pdfDocument.numPages;
+    //     console.log("Number of pages: ", numberOfPages);
+
+    //     const scenario = new PublicScenarios({
+    //         title: req.body.title,
+    //         authorEmail: req.body.authorEmail,
+    //         stateId,
+    //         description: req.body.description,
+    //         path: req.file.path,
+    //         pages: numberOfPages,
+    //         deleteCode
+    //     });
+        
+    //     scenario.save((err) => {
+    //         if (err) return console.log(err);
+    //         res.send('Scenario saved!');
+    //     });
+    // });
+
 });
 
 router.get('/', function(req, res, next) {

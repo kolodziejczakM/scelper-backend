@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-mongoose.Promise = global.Promise // this should be temporary. Now it should be in each model file to avoid deprecation error.
-
 const Schema = mongoose.Schema;
 
 const PublicScenarios = new Schema({

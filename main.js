@@ -28,6 +28,7 @@ app.use('/', index);
 
 // mongoose
 mongoose.connect('mongodb://localhost/scelper_db');
+mongoose.Promise = global.Promise;
 //mongoose.connect('mongodb://mo1780_scelper:Kolo1234@mongo.ct8.pl/mo1780_scelper');
 
 // catch 404 and forward to error handler
