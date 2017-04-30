@@ -6,8 +6,8 @@ const express = require('express'),
       bodyParser = require('body-parser'),
       mongoose = require('mongoose');
 
-const index = require('./routes/index');
-// var users = require('./routes/users');
+const index = require('./routes/index'),
+      api = require('./routes/api');
 
 const app = express();
 
@@ -24,7 +24,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-//app.use('/users', users);
+app.use('/api/v1', api);
 
 // mongoose
 mongoose.connect('mongodb://localhost/scelper_db');
