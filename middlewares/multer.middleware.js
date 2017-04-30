@@ -1,11 +1,13 @@
 
 const path = require('path'), 
       multer = require('multer'),
-      constants = require('../constants/common.constants');
+      constants = require('../constants/common.constants'),
+      publicScenariosConstants = require('../constants/public-scenarios.constants');
 
 const KILO_BYTE = constants.KILO_BYTE,
       ACCEPTABLE_MIMETYPE = constants.SCENARIO_ACCEPTABLE_MIMETYPE,
-      ACCEPTABLE_EXTENSION = constants.SCENARIO_ACCEPTABLE_EXTENSION;
+      ACCEPTABLE_EXTENSION = constants.SCENARIO_ACCEPTABLE_EXTENSION,
+      SCENARIO_ERRORS = publicScenariosConstants.ERRORS;
 
 class MulterMiddleware {
 
@@ -31,22 +33,20 @@ class MulterMiddleware {
                 fileSize: 200 * KILO_BYTE 
             },
             fileFilter: function (req, file, cb) {
-                
+
                 const validExtension = (file.originalname.split('.').pop() === ACCEPTABLE_EXTENSION),
-                    validMimetype = (file.mimetype === ACCEPTABLE_MIMETYPE);
+                      validMimetype = (file.mimetype === ACCEPTABLE_MIMETYPE);
 
                 if (!validMimetype || !validExtension) {
-            
+
                     req.fileFormatError = SCENARIO_ERRORS.EXTENSION.msg;
                     return cb(new Error(req.fileValidationError), false);
                 }
 
                 cb(null, true);
             }
-
         });
     }
-
 }
 
 module.exports = MulterMiddleware;

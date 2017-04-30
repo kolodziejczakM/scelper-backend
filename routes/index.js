@@ -8,7 +8,6 @@ const express = require('express'),
       publicScenariosConstants = require('../constants/public-scenarios.constants'),
       publicScenariosService = require('../services/public-scenarios.service');
 
-// DELETE ON PROD
 corsMiddleware.letLocalhost(router);
 
 router.get('/', function(req, res, next) {
@@ -24,18 +23,19 @@ router.post('/new-scenario', function(req, res) {
     uploadPDF.single(constants.SCENARIO_FORM_FIELD_NAME)(req, res, function(err) {
 
         if(req.fileFormatError) { 
-            res.status(400).send(req.fileFormatError);
+            return res.status(400).json(req.fileFormatError);
         }else if(err) {
-            res.status(413).send(SCENARIO_ERRORS.COMMON_UPLOAD.msg);
+            return res.status(413).json(SCENARIO_ERRORS.COMMON_UPLOAD.msg);
         }
 
         publicScenariosService.prepareForDB(req).then(scenario => {
             scenario.save((err) => {
                 if (err) {  
-                    res.status(400).send(`${SCENARIO_ERRORS.SCENARIO_DB_SAVE.msg} ${err}`);
+                    return res.status(400).json(`${SCENARIO_ERRORS.SCENARIO_DB_SAVE.msg} ${err}`);
                 }
-                
-                res.send(SCENARIO_SUCCESSES.SCENARIO_SAVED.msg);
+
+                res.json(SCENARIO_SUCCESSES.SCENARIO_SAVED.msg);
+                // email verification stuff
             });
         });
 
