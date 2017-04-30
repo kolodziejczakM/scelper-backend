@@ -1,6 +1,7 @@
 
 const express = require('express'),
       router = express.Router(),
+      corsMiddleware = require('../middlewares/cors.middleware'),
       MulterMiddleware = require('../middlewares/multer.middleware'),
       uploadPDF = new MulterMiddleware().uploadPDF,
       constants = require('../constants/common.constants'),
@@ -8,11 +9,7 @@ const express = require('express'),
       publicScenariosService = require('../services/public-scenarios.service');
 
 // DELETE ON PROD
-router.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    next();
-});
+corsMiddleware.letLocalhost(router);
 
 router.get('/', function(req, res, next) {
     res.render('index', { title: 'Express' });
