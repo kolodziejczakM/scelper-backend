@@ -6,17 +6,21 @@ exports.ERRORS = {
     },
     EXTENSION: {
         msg: 'Requested file has invalid format.',
-        code: 'F1'
+        code: 'F0'
     },
     SCENARIO_DB_SAVE: {
         msg: 'There was a problem with database connection. Please Try again.',
-        code: 'DB1'
+        code: 'DB0'
+    },
+    MAILING: {
+        msg: 'There was a problem with mail validation. Please try again.',
+        code: 'M0'
     }
 }
 
 exports.SUCCESSES = {
     SCENARIO_SAVED: {
         msg: 'Scenario has been successfully saved.',
-        code: 'SC1'
+        code: 'SC0'
     }
 }

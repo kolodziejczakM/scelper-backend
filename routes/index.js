@@ -6,7 +6,8 @@ const express = require('express'),
       uploadPDF = new MulterMiddleware().uploadPDF,
       constants = require('../constants/common.constants'),
       publicScenariosConstants = require('../constants/public-scenarios.constants'),
-      publicScenariosService = require('../services/public-scenarios.service');
+      publicScenariosService = require('../services/public-scenarios.service'),
+      MailingScenariosService = require('../services/mailing-scenarios.service');
 
 corsMiddleware.letLocalhost(router);
 
@@ -28,14 +29,24 @@ router.post('/new-scenario', function(req, res) {
             return res.status(413).json(SCENARIO_ERRORS.COMMON_UPLOAD.msg);
         }
 
-        publicScenariosService.prepareForDB(req).then(scenario => {
-            scenario.save((err) => {
+        const scenarioSaved = publicScenariosService.prepareForDB(req).then(scenario => {
+            return scenario.save((err) => {
                 if (err) {  
-                    return res.status(400).json(`${SCENARIO_ERRORS.SCENARIO_DB_SAVE.msg} ${err}`);
+                    return res.status(400).json(`${SCENARIO_ERRORS.SCENARIO_DB_SAVE.msg}`);
                 }
+            });
+        });
 
-                res.json(SCENARIO_SUCCESSES.SCENARIO_SAVED.msg);
-                // email verification stuff
+        const mailSent = scenarioSaved.then(() => {
+            const mail = new MailingScenariosService('kolodziejczak.mn@gmail.com', 1234, 'https://www.scelper.com');
+            
+            mail.transport().sendMail(mail.mailOptions, (error, info) => {
+                if (error) {
+                    console.log(error);
+                    return res.status(400).json(SCENARIO_ERRORS.MAILING.msg);
+                }
+                console.log('Message %s sent: %s', info.messageId, info.response);
+                return res.json(SCENARIO_SUCCESSES.SCENARIO_SAVED.msg);
             });
         });
 
