@@ -1,16 +1,19 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const PublicScenarios = new Schema({
-    title: { type: String, required: true },
-    authorEmail: { type: String, required: true },
-    stateId: { type: Number, required: true },
-    description: { type: String, required: true },
-    path: { type: String, required: true },
-    pages: { type: Number, required: true },
-    deleteCode: {type: String, required: true}
-},{
-    timestamps: true
-});
+const PublicScenarios = require('../schemas/public-scenarios');
 
-module.exports = mongoose.model('PublicScenarios', PublicScenarios);
+exports.getAll = () => {
+    return PublicScenarios.find();
+}
+
+exports.createScenarioEntity = (req, stateId, numberOfPages, deleteCode) => {
+    const scenario = new PublicScenarios({
+        title: req.body.title,
+        authorEmail: req.body.authorEmail,
+        stateId,
+        description: req.body.description,
+        path: req.file.path,
+        pages: numberOfPages,
+        deleteCode
+    });
+    return scenario;
+}

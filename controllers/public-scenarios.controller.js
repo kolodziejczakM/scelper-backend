@@ -1,10 +1,10 @@
 
 const fs = require('fs'),
       PDFJS = require('pdfjs-dist'),
-      PublicScenarios = require('../models/public-scenarios'),
-      constants = require('../constants/common.constants');
+      publicScenariosModel = require('../models/public-scenarios'),
+      constants = require('../constants/public-scenarios.constants');
 
-class PublicScenariosService {
+class PublicScenariosController {
 
     static prepareForDB(req) {
         const pdfData = new Uint8Array(fs.readFileSync(req.file.path)),
@@ -41,18 +41,9 @@ class PublicScenariosService {
     }
 
     static createScenarioEntity(req, stateId, numberOfPages, deleteCode) {
-        const scenario = new PublicScenarios({
-            title: req.body.title,
-            authorEmail: req.body.authorEmail,
-            stateId,
-            description: req.body.description,
-            path: req.file.path,
-            pages: numberOfPages,
-            deleteCode
-        });
-        return scenario;
+        return publicScenariosModel.createScenarioEntity(req, stateId, numberOfPages, deleteCode);
     }
      
 }
 
-module.exports = PublicScenariosService;
+module.exports = PublicScenariosController;

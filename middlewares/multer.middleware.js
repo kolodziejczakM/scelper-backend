@@ -5,8 +5,8 @@ const path = require('path'),
       publicScenariosConstants = require('../constants/public-scenarios.constants');
 
 const KILO_BYTE = constants.KILO_BYTE,
-      ACCEPTABLE_MIMETYPE = constants.SCENARIO_ACCEPTABLE_MIMETYPE,
-      ACCEPTABLE_EXTENSION = constants.SCENARIO_ACCEPTABLE_EXTENSION,
+      ACCEPTABLE_MIMETYPE = publicScenariosConstants.SCENARIO_ACCEPTABLE_MIMETYPE,
+      ACCEPTABLE_EXTENSION = publicScenariosConstants.SCENARIO_ACCEPTABLE_EXTENSION,
       SCENARIO_ERRORS = publicScenariosConstants.ERRORS;
 
 class MulterMiddleware {
