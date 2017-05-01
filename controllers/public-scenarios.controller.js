@@ -1,6 +1,7 @@
 
 const fs = require('fs'),
       PDFJS = require('pdfjs-dist'),
+      uuidV4 = require('uuid/v4'),
       publicScenariosModel = require('../models/public-scenarios'),
       constants = require('../constants/public-scenarios.constants');
 
@@ -26,7 +27,7 @@ class PublicScenariosController {
     }
 
     static getDeleteCode() {
-        return String(Date.now()).slice(-5);
+        return `${uuidV4()}-${String(Date.now()).slice(-5)}`;
     }
 
     static getStateIdFromString(stateString = '') {

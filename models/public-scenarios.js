@@ -9,6 +9,10 @@ exports.getScenarioByAuthorAndTitle = (authorEmail, scenarioTitle) => {
     return PublicScenarios.find({ authorEmail, title: scenarioTitle });
 }
 
+exports.getScenarioByDeleteCode = (deleteCode) => {
+    return PublicScenarios.findOne({ deleteCode });
+}
+
 exports.createScenarioEntity = (req, stateId, numberOfPages, deleteCode) => {
     const scenario = new PublicScenarios({
         title: req.body.title,
@@ -17,7 +21,8 @@ exports.createScenarioEntity = (req, stateId, numberOfPages, deleteCode) => {
         description: req.body.description,
         path: req.file.path,
         pages: numberOfPages,
-        deleteCode
+        deleteCode,
+        active: false
     });
     return scenario;
 }

@@ -46,6 +46,12 @@ class MulterMiddleware {
 
                 publicScenariosModel.getScenarioByAuthorAndTitle(req.body.authorEmail, req.body.title)
                                                        .exec(function(err, data){
+                    
+                    if(err) {
+                        console.log('File upload ERROR: ', err);
+                        return cb(new Error(err), false);
+                    }
+
                     if(data.length > 0){
                         console.log('File upload ERROR: ', SCENARIO_ERRORS.ALREADY_EXISTS.msg);
                         return cb(new Error(SCENARIO_ERRORS.ALREADY_EXISTS.msg), false);

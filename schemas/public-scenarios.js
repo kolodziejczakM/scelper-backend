@@ -9,7 +9,8 @@ const PublicScenarios = new Schema({
     description: { type: String, required: true },
     path: { type: String, required: true },
     pages: { type: Number, required: true },
-    deleteCode: {type: String, required: true}
+    deleteCode: { type: String, required: true },
+    active: { type: Boolean, required: true }
 },{
     timestamps: true
 });
