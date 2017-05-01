@@ -1,6 +1,7 @@
 
 const express = require('express'),
       router = express.Router(),
+      fs = require('fs'),
       corsMiddleware = require('../middlewares/cors.middleware'),
       MulterMiddleware = require('../middlewares/multer.middleware'),
       uploadPDF = new MulterMiddleware().uploadPDF;
@@ -19,7 +20,7 @@ corsMiddleware.letLocalhost(router);
 
 router.get('/public-scenarios',function(req ,res, next){
 
-    publicScenariosModel.getAll().exec(function(err,data){
+    publicScenariosModel.getPublicScenarios().exec(function(err,data){
         if(err){
             res.json(err);
         }else{
@@ -60,6 +61,45 @@ router.post('/public-scenarios', function(req, res) {
         });
 
     });
+});
+
+router.delete('/public-scenarios/:deleteCode', function(req, res, next) {
+
+    publicScenariosModel.getScenarioByDeleteCode(req.params.deleteCode).exec(function(err, scenario){
+
+        if(err) {
+            console.log('ERROR while removing scenario from db', err);
+            return res.status(503).json('ERROR while removing scenario from db');
+        }
+
+        if(!scenario){
+            console.log('ERROR cannot delete that scenario, it doesnt exist');
+            return res.status(404).json('ERROR cannot delete that scenario, it doesnt exist');
+        }
+
+        const newPath = scenario.path.replace('/pdf','/deleted/pdf'),
+              oldPath = scenario.path;
+           
+        const scenarioRemoved = scenario.remove(function (err) {
+            if(err) {
+                console.log('ERROR while deleting scenario entity.');
+                return res.status(503).json('ERROR while deleting scenario entity.');
+            }
+        });
+        
+        scenarioRemoved.then((scenario) => {
+
+            fs.rename(oldPath, newPath, function (err) {
+                if(err) {
+                    console.log('ERROR while deleting scenario file (moving it)', err); 
+                    return res.status(500).json('ERROR while deleting scenario file (moving it)');
+                }
+                return res.json('Successful removal!');
+            });
+        });
+
+    });
+
 });
 
 module.exports = router;

@@ -3,15 +3,19 @@ const PublicScenarios = require('../schemas/public-scenarios');
 
 exports.getAll = () => {
     return PublicScenarios.find();
-}
+};
+
+exports.getPublicScenarios = () => {
+    return PublicScenarios.find({active: true});
+};
 
 exports.getScenarioByAuthorAndTitle = (authorEmail, scenarioTitle) => {
     return PublicScenarios.find({ authorEmail, title: scenarioTitle });
-}
+};
 
 exports.getScenarioByDeleteCode = (deleteCode) => {
     return PublicScenarios.findOne({ deleteCode });
-}
+};
 
 exports.createScenarioEntity = (req, stateId, numberOfPages, deleteCode) => {
     const scenario = new PublicScenarios({
@@ -25,4 +29,4 @@ exports.createScenarioEntity = (req, stateId, numberOfPages, deleteCode) => {
         active: false
     });
     return scenario;
-}
+};

@@ -24,9 +24,6 @@ router.patch('/activation/:deleteCode', function (req, res, next) {
             return res.status(404).json('ERROR deleteCode doesnt exist');
         }
 
-        console.log('Scenario to update: ', scenario);
-        // handle delete from database
-
         const newPath = scenario.path.replace('/tmp',''),
               oldPath = scenario.path;
 
@@ -47,7 +44,7 @@ router.patch('/activation/:deleteCode', function (req, res, next) {
                     console.log('ERROR while renaming scenario file (moving it)', err); 
                     return res.status(500).json('ERROR while renaming scenario file (moving it)');
                 }
-                return res.json('You reached activation page.');
+                return res.json('Successful update!');
             });
         });
         
