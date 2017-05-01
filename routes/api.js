@@ -31,8 +31,7 @@ router.get('/public-scenarios',function(req ,res, next){
 router.post('/public-scenarios', function(req, res) {
     
     uploadPDF.single(SCENARIO_FORM_FIELD_NAME)(req, res, function(err) {
-        console.log('Been in upload middleware.');
-        console.log('Errors?: ', err);
+
         if(req.fileFormatError) { 
             return res.status(400).json(req.fileFormatError);
         }else if(err) {
