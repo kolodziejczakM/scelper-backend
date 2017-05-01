@@ -2,7 +2,8 @@
 const path = require('path'), 
       multer = require('multer'),
       constants = require('../constants/common.constants'),
-      publicScenariosConstants = require('../constants/public-scenarios.constants');
+      publicScenariosConstants = require('../constants/public-scenarios.constants'),
+      publicScenariosModel = require('../models/public-scenarios');
 
 const KILO_BYTE = constants.KILO_BYTE,
       ACCEPTABLE_MIMETYPE = publicScenariosConstants.SCENARIO_ACCEPTABLE_MIMETYPE,
@@ -39,9 +40,17 @@ class MulterMiddleware {
 
                 if (!validMimetype || !validExtension) {
 
-                    req.fileFormatError = SCENARIO_ERRORS.EXTENSION.msg;
-                    return cb(new Error(req.fileValidationError), false);
+                    console.log('File upload ERROR: ', SCENARIO_ERRORS.ALREADY_EXISTS.msg);
+                    return cb(new Error(SCENARIO_ERRORS.ALREADY_EXISTS.msg), false);
                 }
+
+                publicScenariosModel.getScenarioByAuthorAndTitle(req.body.authorEmail, req.body.title)
+                                                       .exec(function(err, data){
+                    if(data.length > 0){
+                        console.log('File upload ERROR: ', SCENARIO_ERRORS.ALREADY_EXISTS.msg);
+                        return cb(new Error(SCENARIO_ERRORS.ALREADY_EXISTS.msg), false);
+                    }
+                });
 
                 cb(null, true);
             }
@@ -50,3 +59,4 @@ class MulterMiddleware {
 }
 
 module.exports = MulterMiddleware;
+

@@ -32,26 +32,26 @@ router.post('/public-scenarios', function(req, res) {
     
     uploadPDF.single(SCENARIO_FORM_FIELD_NAME)(req, res, function(err) {
 
-        if(req.fileFormatError) { 
-            return res.status(400).json(req.fileFormatError);
-        }else if(err) {
-            return res.status(413).json(SCENARIO_ERRORS.COMMON_UPLOAD.msg);
+        if(err) {
+            console.log(err);
+            return res.status(400).json(SCENARIO_ERRORS.COMMON_UPLOAD.msg);
         }
 
         const scenarioSaved = publicScenariosController.prepareForDB(req).then(scenario => {
             return scenario.save((err) => {
                 if (err) {  
+                    console.log(err);
                     return res.status(400).json(`${SCENARIO_ERRORS.SCENARIO_DB_SAVE.msg}`);
                 }
             });
         });
-
+    
         const mailSent = scenarioSaved.then(() => {
             const mail = new MailingScenariosService('kolodziejczak.mn@gmail.com', 1234, 'https://www.scelper.com');
             
             mail.transport().sendMail(mail.mailOptions, (error, info) => {
                 if (error) {
-                    console.log(error);
+                    console.log('Error while sending email: ', error);
                     return res.status(400).json(SCENARIO_ERRORS.MAILING.msg);
                 }
                 console.log('Message %s sent: %s', info.messageId, info.response);

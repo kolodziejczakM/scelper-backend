@@ -11,10 +11,11 @@ class PublicScenariosController {
               stateId = this.getStateIdFromString(req.body.state),
               deleteCode = this.getDeleteCode(),
               pdfDocumentReady = this.getPDF(pdfData);
+        
 
         return pdfDocumentReady.then(pdfDocument => {
             
-            const scenario = this.createScenarioEntity(
+            const scenario = publicScenariosModel.createScenarioEntity(
                 req,
                 stateId,
                 pdfDocument.numPages,
@@ -40,10 +41,6 @@ class PublicScenariosController {
         return PDFJS.getDocument(docUINT8);
     }
 
-    static createScenarioEntity(req, stateId, numberOfPages, deleteCode) {
-        return publicScenariosModel.createScenarioEntity(req, stateId, numberOfPages, deleteCode);
-    }
-     
 }
 
 module.exports = PublicScenariosController;

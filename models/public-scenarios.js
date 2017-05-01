@@ -5,6 +5,10 @@ exports.getAll = () => {
     return PublicScenarios.find();
 }
 
+exports.getScenarioByAuthorAndTitle = (authorEmail, scenarioTitle) => {
+    return PublicScenarios.find({ authorEmail, title: scenarioTitle });
+}
+
 exports.createScenarioEntity = (req, stateId, numberOfPages, deleteCode) => {
     const scenario = new PublicScenarios({
         title: req.body.title,
