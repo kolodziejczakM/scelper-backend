@@ -4,7 +4,7 @@ exports.data = {
     secure: true, 
     host: 'mail11.mydevil.net',
     auth: {
-        user: 'rejestracja@scelper.com',
+        user: 'administracja@scelper.com',
         pass: 'Kolo1234'
     }
 }
