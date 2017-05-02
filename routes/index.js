@@ -1,8 +1,13 @@
 const express = require('express'),
       router = express.Router(),
       fs = require('fs'),
-      corsMiddleware = require('../middlewares/cors.middleware'),
+      corsMiddleware = require('../middlewares/cors.middleware');
+
+const publicScenariosConstants = require('../constants/public-scenarios.constants'),
       publicScenariosModel = require('../models/public-scenarios');
+
+const SCENARIO_ERRORS = publicScenariosConstants.ERRORS,
+      SCENARIO_SUCCESSES = publicScenariosConstants.SUCCESSES;
 
 corsMiddleware.letLocalhost(router);
 
@@ -15,13 +20,13 @@ router.patch('/activation/:deleteCode', function (req, res, next) {
     publicScenariosModel.getScenarioByDeleteCode(req.params.deleteCode).exec(function(err, scenario){
                     
         if(err) {
-            console.log('ERROR deleteCode fetching from db', err);
-            return res.status(503).json('ERROR deleteCode fetching from db');
+            console.log(SCENARIO_ERRORS.COMMON_DB.msg, err);
+            return res.status(503).json(SCENARIO_ERRORS.COMMON_DB);
         }
 
         if(!scenario){
-            console.log('ERROR deleteCode doesnt exist', req.params.deleteCode);
-            return res.status(404).json('ERROR deleteCode doesnt exist');
+            console.log(SCENARIO_ERRORS.DELETE_CODE_NOT_EXISTS.msg, req.params.deleteCode);
+            return res.status(404).json(SCENARIO_ERRORS.DELETE_CODE_NOT_EXISTS);
         }
 
         const newPath = scenario.path.replace('/tmp',''),
@@ -32,8 +37,8 @@ router.patch('/activation/:deleteCode', function (req, res, next) {
         
         const scenarioUpdated = scenario.save(function (err) {
             if(err) {
-                console.log('ERROR while updating scenario entity.');
-                return res.status(503).json('ERROR while updating scenario entity.');
+                console.log(SCENARIO_ERRORS.SCENARIO_DB_UPDATE.msg, err);
+                return res.status(503).json(SCENARIO_ERRORS.SCENARIO_DB_UPDATE);
             }
         });
 
@@ -41,10 +46,10 @@ router.patch('/activation/:deleteCode', function (req, res, next) {
 
             fs.rename(oldPath, newPath, function (err) {
                 if(err) {
-                    console.log('ERROR while renaming scenario file (moving it)', err); 
-                    return res.status(500).json('ERROR while renaming scenario file (moving it)');
+                    console.log(SCENARIO_ERRORS.SCENARIO_FILE_UPDATE.msg, err); 
+                    return res.status(500).json(SCENARIO_ERRORS.SCENARIO_FILE_UPDATE);
                 }
-                return res.json('Successful update!');
+                return res.json(SCENARIO_SUCCESSES.SCENARIO_UPDATED);
             });
         });
         

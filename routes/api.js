@@ -20,7 +20,7 @@ corsMiddleware.letLocalhost(router);
 
 router.get('/public-scenarios',function(req ,res, next){
 
-    publicScenariosModel.getPublicScenarios().exec(function(err,data){
+    publicScenariosModel.getPublicScenarios().exec(function(err, data){
         if(err){
             res.json(err);
         }else{
@@ -35,14 +35,14 @@ router.post('/public-scenarios', function(req, res) {
 
         if(err) {
             console.log(err);
-            return res.status(400).json(SCENARIO_ERRORS.COMMON_UPLOAD.msg);
+            return res.status(400).json(SCENARIO_ERRORS.COMMON_UPLOAD);
         }
 
         const scenarioSaved = publicScenariosController.prepareForDB(req).then(scenario => {
             return scenario.save((err) => {
                 if (err) {  
                     console.log(err);
-                    return res.status(400).json(`${SCENARIO_ERRORS.SCENARIO_DB_SAVE.msg}`);
+                    return res.status(400).json(SCENARIO_ERRORS.SCENARIO_DB_SAVE);
                 }
             });
         });
@@ -52,11 +52,11 @@ router.post('/public-scenarios', function(req, res) {
             
             mail.transport().sendMail(mail.mailOptions, (error, info) => {
                 if (error) {
-                    console.log('Error while sending email: ', error);
-                    return res.status(400).json(SCENARIO_ERRORS.MAILING.msg);
+                    console.log(SCENARIO_ERRORS.MAIL_SENDING.msg, error);
+                    return res.status(400).json(SCENARIO_ERRORS.MAIL_SENDING);
                 }
-                console.log('Message %s sent: %s', info.messageId, info.response);
-                return res.json(SCENARIO_SUCCESSES.SCENARIO_SAVED.msg);
+                console.log(SCENARIO_SUCCESSES.MAIL_SENT.msg, info.messageId, info.response);
+                return res.json(SCENARIO_SUCCESSES.MAIL_SENT);
             });
         });
 
@@ -68,13 +68,13 @@ router.delete('/public-scenarios/:deleteCode', function(req, res, next) {
     publicScenariosModel.getScenarioByDeleteCode(req.params.deleteCode).exec(function(err, scenario){
 
         if(err) {
-            console.log('ERROR while removing scenario from db', err);
-            return res.status(503).json('ERROR while removing scenario from db');
+            console.log(SCENARIO_ERRORS.SCENARIO_DB_REMOVE.msg, err);
+            return res.status(503).json(SCENARIO_ERRORS.SCENARIO_DB_REMOVE);
         }
 
         if(!scenario){
-            console.log('ERROR cannot delete that scenario, it doesnt exist');
-            return res.status(404).json('ERROR cannot delete that scenario, it doesnt exist');
+            console.log(SCENARIO_ERRORS.NOT_EXISTS.msg);
+            return res.status(404).json(SCENARIO_ERRORS.NOT_EXISTS);
         }
 
         const newPath = scenario.path.replace('/pdf','/deleted/pdf'),
@@ -82,8 +82,8 @@ router.delete('/public-scenarios/:deleteCode', function(req, res, next) {
            
         const scenarioRemoved = scenario.remove(function (err) {
             if(err) {
-                console.log('ERROR while deleting scenario entity.');
-                return res.status(503).json('ERROR while deleting scenario entity.');
+                console.log(SCENARIO_ERRORS.SCENARIO_DB_REMOVE.msg, err);
+                return res.status(503).json(SCENARIO_ERRORS.SCENARIO_DB_REMOVE);
             }
         });
         
@@ -91,10 +91,10 @@ router.delete('/public-scenarios/:deleteCode', function(req, res, next) {
 
             fs.rename(oldPath, newPath, function (err) {
                 if(err) {
-                    console.log('ERROR while deleting scenario file (moving it)', err); 
-                    return res.status(500).json('ERROR while deleting scenario file (moving it)');
+                    console.log(SCENARIO_ERRORS.SCENARIO_FILE_REMOVE.msg, err); 
+                    return res.status(500).json(SCENARIO_ERRORS.SCENARIO_FILE_REMOVE);
                 }
-                return res.json('Successful removal!');
+                return res.json(SCENARIO_SUCCESSES.SCENARIO_REMOVED);
             });
         });
 
