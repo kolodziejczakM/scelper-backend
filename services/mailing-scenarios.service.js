@@ -10,7 +10,7 @@ class MailingScenariosService {
         this.transporter = nodemailer.createTransport(mailingScenariosConfig.data);
 
         this.mailOptions = {
-            from: '"SCELPER.COM" <rejestracja@scelper.com>',
+            from: '"SCELPER.COM" <administracja@scelper.com>',
             to: addressee,
             subject: 'Scenarzysto... Dziękujemy!',
             text: '', 
