@@ -4,7 +4,7 @@ const express = require('express'),
       corsMiddleware = require('../middlewares/cors.middleware');
 
 const publicScenariosConstants = require('../constants/public-scenarios.constants'),
-      publicScenariosModel = require('../models/public-scenarios');
+      publicScenariosModel = require('../models/public-scenarios.model');
 
 const SCENARIO_ERRORS = publicScenariosConstants.ERRORS,
       SCENARIO_SUCCESSES = publicScenariosConstants.SUCCESSES;

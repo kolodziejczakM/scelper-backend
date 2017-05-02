@@ -1,9 +1,10 @@
 
 const path = require('path'), 
-      multer = require('multer'),
-      constants = require('../constants/common.constants'),
+      multer = require('multer');
+
+const constants = require('../constants/common.constants'),
       publicScenariosConstants = require('../constants/public-scenarios.constants'),
-      publicScenariosModel = require('../models/public-scenarios');
+      publicScenariosModel = require('../models/public-scenarios.model');
 
 const KILO_BYTE = constants.KILO_BYTE,
       ACCEPTABLE_MIMETYPE = publicScenariosConstants.SCENARIO_ACCEPTABLE_MIMETYPE,

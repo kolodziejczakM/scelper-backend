@@ -7,7 +7,7 @@ const express = require('express'),
       uploadPDF = new MulterMiddleware().uploadPDF;
 
 const publicScenariosConstants = require('../constants/public-scenarios.constants'),
-      publicScenariosModel = require('../models/public-scenarios'),
+      publicScenariosModel = require('../models/public-scenarios.model'),
       publicScenariosController = require('../controllers/public-scenarios.controller'),
       MailingScenariosService = require('../services/mailing-scenarios.service');
 
@@ -38,28 +38,29 @@ router.post('/public-scenarios', function(req, res) {
             return res.status(400).json(SCENARIO_ERRORS.COMMON_UPLOAD);
         }
 
-        const scenarioSaved = publicScenariosController.prepareForDB(req).then(scenario => {
-            return scenario.save((err) => {
+        const scenarioPrepared = publicScenariosController.prepareForDB(req);
+        
+        scenarioPrepared.then(scenario => {
+            scenario.save((err) => {
                 if (err) {  
                     console.log(err);
                     return res.status(400).json(SCENARIO_ERRORS.SCENARIO_DB_SAVE);
                 }
-            });
-        });
-    
-        const mailSent = scenarioSaved.then(() => {
-            const mail = new MailingScenariosService('kolodziejczak.mn@gmail.com', 1234, 'https://www.scelper.com');
-            
-            mail.transport().sendMail(mail.mailOptions, (error, info) => {
-                if (error) {
-                    console.log(SCENARIO_ERRORS.MAIL_SENDING.msg, error);
-                    return res.status(400).json(SCENARIO_ERRORS.MAIL_SENDING);
-                }
-                console.log(SCENARIO_SUCCESSES.MAIL_SENT.msg, info.messageId, info.response);
-                return res.json(SCENARIO_SUCCESSES.MAIL_SENT);
-            });
-        });
 
+                const activationUrl = `http://localhost:4200/#/activation/${scenario.deleteCode}`,
+                      mail = new MailingScenariosService(req.body.authorEmail, scenario.deleteCode, activationUrl);
+            
+                mail.transport().sendMail(mail.mailOptions, (error, info) => {
+                    if (error) {
+                        console.log(SCENARIO_ERRORS.MAIL_SENDING.msg, error);
+                        return res.status(400).json(SCENARIO_ERRORS.MAIL_SENDING);
+                    }
+                    console.log(SCENARIO_SUCCESSES.MAIL_SENT.msg, info.messageId, info.response);
+                    return res.json(SCENARIO_SUCCESSES.MAIL_SENT);
+                });
+            });
+        });
+        
     });
 });
 

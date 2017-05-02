@@ -1,5 +1,5 @@
 
-const PublicScenarios = require('../schemas/public-scenarios');
+const PublicScenarios = require('../schemas/public-scenarios.schema');
 
 exports.getAll = () => {
     return PublicScenarios.find();

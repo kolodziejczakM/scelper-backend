@@ -1,9 +1,10 @@
 
 const fs = require('fs'),
       PDFJS = require('pdfjs-dist'),
-      uuidV4 = require('uuid/v4'),
-      publicScenariosModel = require('../models/public-scenarios'),
-      constants = require('../constants/public-scenarios.constants');
+      uuidV4 = require('uuid/v4');
+
+const publicScenariosModel = require('../models/public-scenarios.model'),
+      publicScenariosConstants = require('../constants/public-scenarios.constants');
 
 class PublicScenariosController {
 
@@ -31,7 +32,7 @@ class PublicScenariosController {
     }
 
     static getStateIdFromString(stateString = '') {
-        if(stateString === constants.SCENARIO_STATE_STRING) {
+        if(stateString === publicScenariosConstants.SCENARIO_STATE_STRING) {
             return 0;
         } else {
             return 1;
