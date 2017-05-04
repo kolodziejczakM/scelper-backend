@@ -6,7 +6,7 @@ exports.getAll = () => {
 };
 
 exports.getPublicScenarios = () => {
-    return PublicScenarios.find({active: true});
+    return PublicScenarios.find({active: true}, { _id: false, active: false, deleteCode: false });
 };
 
 exports.getScenarioByAuthorAndTitle = (authorEmail, scenarioTitle) => {
