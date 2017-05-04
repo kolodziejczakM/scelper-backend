@@ -22,7 +22,8 @@ router.get('/public-scenarios',function(req ,res, next){
 
     publicScenariosModel.getPublicScenarios().exec(function(err, data){
         if(err){
-            res.json(err);
+            console.log(err);
+            res.json(SCENARIO_ERRORS.COMMON_DOWNLOAD);
         }else{
             res.json(data);
         }
