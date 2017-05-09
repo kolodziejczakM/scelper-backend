@@ -60,9 +60,9 @@ exports.ERRORS = {
 }
 
 exports.SUCCESSES = {
-    SCENARIO_SAVED: {
-        msg: 'Scenario has been successfully saved.',
-        code: 'SCENARIO_SAVED'
+    MAIL_SENT: {
+        msg: 'Message sent.',
+        code: 'MAIL_SENT'
     },
     SCENARIO_UPDATED: {
         msg: 'Scenario has been successfully updated.',
@@ -71,9 +71,5 @@ exports.SUCCESSES = {
     SCENARIO_REMOVED: {
         msg: 'Scenario has been successfully removed.',
         code: 'SCENARIO_REMOVED'
-    },
-    MAIL_SENT: {
-        msg: 'Message sent.',
-        code: 'MAIL_SENT'
     }
 }
