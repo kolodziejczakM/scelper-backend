@@ -17,11 +17,11 @@ exports.getScenarioByDeleteCode = (deleteCode) => {
     return PublicScenarios.findOne({ deleteCode });
 };
 
-exports.createScenarioEntity = (req, stateId, numberOfPages, deleteCode) => {
+exports.createScenarioEntity = (req, state, numberOfPages, deleteCode) => {
     const scenario = new PublicScenarios({
         title: req.body.title,
         authorEmail: req.body.authorEmail,
-        stateId,
+        state,
         description: req.body.description,
         path: req.file.path,
         pages: numberOfPages,

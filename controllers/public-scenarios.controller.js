@@ -10,7 +10,7 @@ class PublicScenariosController {
 
     static prepareForDB(req) {
         const pdfData = new Uint8Array(fs.readFileSync(req.file.path)),
-              stateId = this.getStateIdFromString(req.body.state),
+              state = JSON.parse(req.body.state),
               deleteCode = this.getDeleteCode(),
               pdfDocumentReady = this.getPDF(pdfData);
         
@@ -19,7 +19,7 @@ class PublicScenariosController {
             
             const scenario = publicScenariosModel.createScenarioEntity(
                 req,
-                stateId,
+                state,
                 pdfDocument.numPages,
                 deleteCode
             );
@@ -29,14 +29,6 @@ class PublicScenariosController {
 
     static getDeleteCode() {
         return `${uuidV4()}-${String(Date.now()).slice(-5)}`;
-    }
-
-    static getStateIdFromString(stateString = '') {
-        if(stateString === publicScenariosConstants.SCENARIO_STATE_STRING) {
-            return 0;
-        } else {
-            return 1;
-        }
     }
 
     static getPDF(docUINT8) {
