@@ -2,6 +2,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const ScenarioGenre = new Schema({
+    id: { type: Number, required: true },
+    label: { type: String, required: true }
+});
+
 const ScenarioState = new Schema({
     id: { type: Number, required: true },
     value: { type: Number,required: true },
@@ -11,6 +16,7 @@ const ScenarioState = new Schema({
 const PublicScenarios = new Schema({
     title: { type: String, required: true },
     authorEmail: { type: String, required: true },
+    genre: ScenarioGenre,
     state: ScenarioState,
     description: { type: String, required: true },
     path: { type: String, required: true },

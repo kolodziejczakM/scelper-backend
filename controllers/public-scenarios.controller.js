@@ -10,7 +10,8 @@ class PublicScenariosController {
 
     static prepareForDB(req) {
         const pdfData = new Uint8Array(fs.readFileSync(req.file.path)),
-              state = JSON.parse(req.body.state),
+              genre = JSON.parse(req.body.genre),
+              state = JSON.parse(req.body.state),   
               deleteCode = this.getDeleteCode(),
               pdfDocumentReady = this.getPDF(pdfData);
         
@@ -19,6 +20,7 @@ class PublicScenariosController {
             
             const scenario = publicScenariosModel.createScenarioEntity(
                 req,
+                genre,
                 state,
                 pdfDocument.numPages,
                 deleteCode
