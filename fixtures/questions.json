@@ -1,0 +1,113 @@
+
+[
+    {
+        "id": 0,
+        "category": "bohater",
+        "questionText": "Jaki jest życiowy cel głównego bohatera?"
+    },
+    {
+        "id": 1,
+        "category": "bohater",
+        "questionText": "Co działo się w życiu głównego bohatera przed właściwą akcją filmu? Jakie miał dzieciństwo?"
+    },
+    {
+        "id": 2,
+        "category": "bohater",
+        "questionText": "Potrafiłbyś w kilku zdaniach opisać życie prywatne głównego bohatera? Ma jakąś pasję?"
+    },
+    {
+        "id": 3,
+        "category": "bohater",
+        "questionText": "Potrafiłbyś w kilku zdaniach opisać życie osobiste głównego bohatera? Jest zakochany?"
+    },
+    {
+        "id": 4,
+        "category": "bohater",
+        "questionText": "Potrafiłbyś w kilku zdaniach opisać życie zawodowe głównego bohatera? Spóźnia się do pracy?"
+    },
+    {
+        "id": 5,
+        "category": "świat",
+        "questionText": "Jaki problem przedstawia Twój scenariusz i dlaczego jest ważny?"
+    },
+    {
+        "id": 6,
+        "category": "bohater",
+        "questionText": "Główna przeszkoda na drodze do szczęścia mojego bohatera to:"
+    },
+    {
+        "id": 7,
+        "category": "bohater",
+        "questionText": "Jakie narzędzia do pokonania przeszkód ma główny bohater?"
+    },
+    {
+        "id": 8,
+        "category": "bohater",
+        "questionText": "Główny bohater jest słaby. Dowodem tego jest:"
+    },
+    {
+        "id": 9,
+        "category": "bohater",
+        "questionText": "Główny bohater jest silny. Dowodem tego jest:"
+    },
+    {
+        "id": 10,
+        "category": "bohater",
+        "questionText": "Największą siłą antagonisty jest:"
+    },
+    {
+        "id": 11,
+        "category": "bohater",
+        "questionText": "Największą słabością antagonisty jest:"
+    },
+    {
+        "id": 12,
+        "category": "świat",
+        "questionText": "Co powoduje, że bohater wydaje się niepasować do świata, w którym się znajduje?"
+    },
+    {
+        "id": 13,
+        "category": "świat",
+        "questionText": "Gdybyś miał pokazać świat Twojej historii za pomocą jednego zdjęcia, co by przedstawiało? Czego by tam brakowało?"
+    },
+    {
+        "id": 14,
+        "category": "świat",
+        "questionText": "Co spowoduje, że świat z Twojej historii będzie przekonujący?"
+    },
+    {
+        "id": 15,
+        "category": "bohater",
+        "questionText": "Co główny bohater robi w wolnym czasie? Dlaczego może to robić?"
+    },
+    {
+        "id": 16,
+        "category": "bohater",
+        "questionText": "Dlaczego antagonista wydaje się być silniejszy od głównego bohatera?"
+    },
+    {
+        "id": 17,
+        "category": "bohater",
+        "questionText": "Kogo widziałbyś w głównej roli swojego filmu? Dlaczego?"
+    },
+    {
+        "id": 18,
+        "category": "świat",
+        "questionText": "Czy są w świecie Twojej historii miejsca, do których bohater bałby się pójść? Dlaczego?"
+    },
+    {
+        "id": 19,
+        "category": "świat",
+        "questionText": "Czy wiesz jak zakończy się Twoja historia?"
+    },
+    {
+        "id": 20,
+        "category": "świat",
+        "questionText": "Czy wiesz jak rozpocznie się Twoja historia?"
+    },
+    {
+        "id": 21,
+        "category": "świat",
+        "questionText": "Czy potarfisz określić choć dwa punkty zwrotne w Twojej historii? Kiedy występują?"
+    }
+]
