@@ -1,22 +1,9 @@
 
 exports.SCENARIO_ACCEPTABLE_MIMETYPE = 'application/pdf';
 exports.SCENARIO_ACCEPTABLE_EXTENSION = 'pdf';
-exports.SCENARIO_STATE_STRING = 'Niekompletny';
 exports.SCENARIO_FORM_FIELD_NAME = 'file';
 
 exports.ERRORS = {
-    COMMON_UPLOAD: {
-        msg: 'There was an error with file upload. Please try again.',
-        code: 'COMMON_UPLOAD'
-    },
-    COMMON_DOWNLOAD: {
-        msg: 'There was an error with fetching data from server. Please try again.',
-        code: 'COMMON_DOWNLOAD'
-    },
-    COMMON_DB: {
-        msg: 'There was a problem with database connection. Please Try again.',
-        code: 'COMMON_DB'
-    },
     EXTENSION: {
         msg: 'Requested file has invalid format.',
         code: 'EXTENSION'
@@ -57,7 +44,7 @@ exports.ERRORS = {
         msg: 'ERROR delete code does not exist',
         code: 'DELETE_CODE_NOT_EXISTS'
     }
-}
+};
 
 exports.SUCCESSES = {
     MAIL_SENT: {
@@ -72,4 +59,4 @@ exports.SUCCESSES = {
         msg: 'Scenario has been successfully removed.',
         code: 'SCENARIO_REMOVED'
     }
-}
+};

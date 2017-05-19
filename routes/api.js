@@ -6,24 +6,41 @@ const express = require('express'),
       MulterMiddleware = require('../middlewares/multer.middleware'),
       uploadPDF = new MulterMiddleware().uploadPDF;
 
+const commonConstants = require('../constants/common.constants');
+
 const publicScenariosConstants = require('../constants/public-scenarios.constants'),
       publicScenariosModel = require('../models/public-scenarios.model'),
       publicScenariosController = require('../controllers/public-scenarios.controller'),
       MailingScenariosService = require('../services/mailing-scenarios.service');
 
-const SCENARIO_ERRORS = publicScenariosConstants.ERRORS,
+const interviewQuestionsModel = require('../models/interview-questions.model');
+
+const COMMON_ERRORS = commonConstants.ERRORS,
+      SCENARIO_ERRORS = publicScenariosConstants.ERRORS,
       SCENARIO_SUCCESSES = publicScenariosConstants.SUCCESSES,
       SCENARIO_FORM_FIELD_NAME = publicScenariosConstants.SCENARIO_FORM_FIELD_NAME;
 
 
 corsMiddleware.letLocalhost(router);
 
+router.get('/interview-questions',function(req ,res, next){
+
+    interviewQuestionsModel.getAll().exec(function(err, data){
+        if(err){
+            console.log(err);
+            res.status(503).json(COMMON_ERRORS.COMMON_DOWNLOAD);
+        }else{
+            res.json(data);
+        }
+    });
+});
+
 router.get('/public-scenarios',function(req ,res, next){
 
     publicScenariosModel.getPublicScenarios().exec(function(err, data){
         if(err){
             console.log(err);
-            res.status(503).json(SCENARIO_ERRORS.COMMON_DOWNLOAD);
+            res.status(503).json(COMMON_ERRORS.COMMON_DOWNLOAD);
         }else{
             res.json(data);
         }
@@ -36,7 +53,7 @@ router.post('/public-scenarios', function(req, res) {
 
         if(err) {
             console.log(err);
-            return res.status(400).json(SCENARIO_ERRORS.COMMON_UPLOAD);
+            return res.status(400).json(COMMON_ERRORS.COMMON_UPLOAD);
         }
 
         const scenarioPrepared = publicScenariosController.prepareForDB(req);

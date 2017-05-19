@@ -3,10 +3,13 @@ const express = require('express'),
       fs = require('fs'),
       corsMiddleware = require('../middlewares/cors.middleware');
 
+const commonConstants = require('../constants/common.constants');
+
 const publicScenariosConstants = require('../constants/public-scenarios.constants'),
       publicScenariosModel = require('../models/public-scenarios.model');
 
-const SCENARIO_ERRORS = publicScenariosConstants.ERRORS,
+const COMMON_ERRORS = commonConstants.ERRORS,
+      SCENARIO_ERRORS = publicScenariosConstants.ERRORS,
       SCENARIO_SUCCESSES = publicScenariosConstants.SUCCESSES;
 
 corsMiddleware.letLocalhost(router);
@@ -20,8 +23,8 @@ router.patch('/activation/:deleteCode', function (req, res, next) {
     publicScenariosModel.getScenarioByDeleteCode(req.params.deleteCode).exec(function(err, scenario){
                     
         if(err) {
-            console.log(SCENARIO_ERRORS.COMMON_DB.msg, err);
-            return res.status(503).json(SCENARIO_ERRORS.COMMON_DB);
+            console.log(COMMON_ERRORS.COMMON_DB.msg, err);
+            return res.status(503).json(COMMON_ERRORS.COMMON_DB);
         }
 
         if(!scenario){
