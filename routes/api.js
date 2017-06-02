@@ -13,6 +13,8 @@ const publicScenariosConstants = require('../constants/public-scenarios.constant
       publicScenariosController = require('../controllers/public-scenarios.controller'),
       MailingScenariosService = require('../services/mailing-scenarios.service');
 
+const summaryGeneratorService = require('../services/summary-generator.service');
+
 const interviewQuestionsModel = require('../models/interview-questions.model');
 
 const COMMON_ERRORS = commonConstants.ERRORS,
@@ -20,6 +22,7 @@ const COMMON_ERRORS = commonConstants.ERRORS,
       SCENARIO_SUCCESSES = publicScenariosConstants.SUCCESSES,
       SCENARIO_FORM_FIELD_NAME = publicScenariosConstants.SCENARIO_FORM_FIELD_NAME;
 
+const PDFDocument = require('pdfkit');
 
 corsMiddleware.letLocalhost(router);
 
@@ -45,6 +48,14 @@ router.get('/public-scenarios',function(req ,res, next){
             res.json(data);
         }
     });
+});
+
+router.post('/interview-summary', function(req, res) {
+    console.log(req.body);
+    const interviewResult = req.body;
+    const doc = summaryGeneratorService.streamSummaryPDF(interviewResult);
+    doc.end();
+    return doc.pipe(res);
 });
 
 router.post('/public-scenarios', function(req, res) {
