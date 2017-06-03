@@ -51,9 +51,7 @@ router.get('/public-scenarios',function(req ,res, next){
 });
 
 router.post('/interview-summary', function(req, res) {
-    console.log(req.body);
-    const interviewResult = req.body;
-    const doc = summaryGeneratorService.streamSummaryPDF(interviewResult);
+    const doc = summaryGeneratorService.streamSummaryPDF(req.body);
     doc.end();
     return doc.pipe(res);
 });
