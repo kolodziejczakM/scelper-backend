@@ -17,6 +17,8 @@ const summaryGeneratorService = require('../services/summary-generator.service')
 
 const interviewQuestionsModel = require('../models/interview-questions.model');
 
+const symbolsModel = require('../models/symbols.model');
+
 const COMMON_ERRORS = commonConstants.ERRORS,
       SCENARIO_ERRORS = publicScenariosConstants.ERRORS,
       SCENARIO_SUCCESSES = publicScenariosConstants.SUCCESSES,
@@ -26,26 +28,41 @@ const PDFDocument = require('pdfkit');
 
 corsMiddleware.letLocalhost(router);
 
-router.get('/interview-questions',function(req ,res, next){
+
+router.get('/random-symbols',function(req ,res, next) {
+
+    const amount = Number(req.query.amount);
+
+    symbolsModel.getRandom(amount).exec(function(err, data) {
+        if(err) {
+            console.log(err);
+            return res.status(400).json(COMMON_ERRORS.COMMON_DOWNLOAD);
+        } else {
+            return res.json(data);
+        }
+    });
+});
+
+router.get('/interview-questions',function(req ,res, next) {
 
     interviewQuestionsModel.getAll().exec(function(err, data){
-        if(err){
+        if(err) {
             console.log(err);
-            res.status(503).json(COMMON_ERRORS.COMMON_DOWNLOAD);
-        }else{
-            res.json(data);
+            return res.status(503).json(COMMON_ERRORS.COMMON_DOWNLOAD);
+        } else {
+            return res.json(data);
         }
     });
 });
 
 router.get('/public-scenarios',function(req ,res, next){
 
-    publicScenariosModel.getPublicScenarios().exec(function(err, data){
-        if(err){
+    publicScenariosModel.getPublicScenarios().exec(function(err, data) {
+        if(err) {
             console.log(err);
-            res.status(503).json(COMMON_ERRORS.COMMON_DOWNLOAD);
-        }else{
-            res.json(data);
+            return res.status(503).json(COMMON_ERRORS.COMMON_DOWNLOAD);
+        } else{
+            return res.json(data);
         }
     });
 });
