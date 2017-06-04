@@ -45,6 +45,10 @@ class SummaryGeneratorService {
             if (question.answer) {
                 doc.font(commonConstants.ROBOTO_FONT_NAME, 18)
                    .fillColor(commonConstants.SCELPER_GRAY_COLOR, 1).text(question.questionText, 40, undefined)
+
+                doc.font(commonConstants.ROBOTO_FONT_NAME, 16)
+                   .fillColor(commonConstants.SCELPER_GRAY_COLOR, summaryGeneratorConstants.CREATED_WITH_LINK_OPACITY * 2)
+                   .text(`(${this.appendAnsweringTimeInMinutes(question.timeOfAnswering)})`)
                    .moveDown();
 
                 doc.font(commonConstants.ROBOTO_FONT_NAME, 16)
@@ -52,6 +56,13 @@ class SummaryGeneratorService {
                    .moveDown();
             }
         });         
+    }
+
+    static appendAnsweringTimeInMinutes(timeInSeconds) {
+        const minutes = '0' + Math.floor(timeInSeconds / 60),
+              seconds = '0' + (timeInSeconds - minutes * 60);
+
+        return minutes.slice(-2) + ':' + seconds.slice(-2);
     }
 }
 
