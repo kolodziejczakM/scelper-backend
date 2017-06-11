@@ -3,211 +3,211 @@
     {
         "id": 0,
         "codeName": "agenda",
-        "path": "symbols/agenda.png"
+        "path": "/symbols/agenda.png"
     },
     {
         "id": 1,
         "codeName": "alarm-clock",
-        "path": "symbols/alarm-clock.png"
+        "path": "/symbols/alarm-clock.png"
     },
     {
         "id": 2,
         "codeName": "alarm",
-        "path": "symbols/alarm.png"
+        "path": "/symbols/alarm.png"
     },
     {
         "id": 3,
         "codeName": "attachment",
-        "path": "symbols/attachment.png"
+        "path": "/symbols/attachment.png"
     },
     {
         "id": 4,
         "codeName": "binoculars",
-        "path": "symbols/binoculars.png"
+        "path": "/symbols/binoculars.png"
     },
     {
         "id": 5,
         "codeName": "calculator",
-        "path": "symbols/calculator.png"
+        "path": "/symbols/calculator.png"
     },
     {
         "id": 6,
         "codeName": "command",
-        "path": "symbols/command.png"
+        "path": "/symbols/command.png"
     },
     {
         "id": 7,
         "codeName": "compact-disc-2",
-        "path": "symbols/compact-disc-2.png"
+        "path": "/symbols/compact-disc-2.png"
     },
     {
         "id": 8,
         "codeName": "compass",
-        "path": "symbols/compass.png"
+        "path": "/symbols/compass.png"
     },
     {
         "id": 9,
         "codeName": "compose",
-        "path": "symbols/compose.png"
+        "path": "/symbols/compose.png"
     },
     {
         "id": 10,
         "codeName": "dislike-1",
-        "path": "symbols/dislike-1.png"
+        "path": "/symbols/dislike-1.png"
     },
     {
         "id": 11,
         "codeName": "edit-1",
-        "path": "symbols/edit-1.png"
+        "path": "/symbols/edit-1.png"
     },
     {
         "id": 12,
         "codeName": "eyeglasses",
-        "path": "symbols/eyeglasses.png"
+        "path": "/symbols/eyeglasses.png"
     },
     {
         "id": 13,
         "codeName": "film",
-        "path": "symbols/film.png"
+        "path": "/symbols/film.png"
     },
     {
         "id": 14,
         "codeName": "fingerprint",
-        "path": "symbols/fingerprint.png"
+        "path": "/symbols/fingerprint.png"
     },
     {
         "id": 15,
         "codeName": "flag-1",
-        "path": "symbols/flag-1.png"
+        "path": "/symbols/flag-1.png"
     },
     {
         "id": 16,
         "codeName": "folder-14",
-        "path": "symbols/folder-14.png"
+        "path": "/symbols/folder-14.png"
     },
     {
         "id": 17,
         "codeName": "forbidden",
-        "path": "symbols/forbidden.png"
+        "path": "/symbols/forbidden.png"
     },
     {
         "id": 18,
         "codeName": "garbage-2",
-        "path": "symbols/garbage-2.png"
+        "path": "/symbols/garbage-2.png"
     },
     {
         "id": 19,
         "codeName": "hold",
-        "path": "symbols/hold.png"
+        "path": "/symbols/hold.png"
     },
     {
         "id": 20,
         "codeName": "id-card-5",
-        "path": "symbols/id-card-5.png"
+        "path": "/symbols/id-card-5.png"
     },
     {
         "id": 21,
         "codeName": "idea",
-        "path": "symbols/idea.png"
+        "path": "/symbols/idea.png"
     },
     {
         "id": 22,
         "codeName": "internet",
-        "path": "symbols/internet.png"
+        "path": "/symbols/internet.png"
     },
     {
         "id": 23,
         "codeName": "key",
-        "path": "symbols/key.png"
+        "path": "/symbols/key.png"
     },
     {
         "id": 24,
         "codeName": "magic-wand",
-        "path": "symbols/magic-wand.png"
+        "path": "/symbols/magic-wand.png"
     },
     {
         "id": 25,
         "codeName": "magnet",
-        "path": "symbols/magnet.png"
+        "path": "/symbols/magnet.png"
     },
     {
         "id": 26,
         "codeName": "map-location",
-        "path": "symbols/map-location.png"
+        "path": "/symbols/map-location.png"
     },
     {
         "id": 27,
         "codeName": "microphone-1",
-        "path": "symbols/microphone-1.png"
+        "path": "/symbols/microphone-1.png"
     },
     {
         "id": 28,
         "codeName": "music-player-1",
-        "path": "symbols/music-player-1.png"
+        "path": "/symbols/music-player-1.png"
     },
     {
         "id": 29,
         "codeName": "paper-plane-1",
-        "path": "symbols/paper-plane-1.png"
+        "path": "/symbols/paper-plane-1.png"
     },
     {
         "id": 30,
         "codeName": "photo-camera",
-        "path": "symbols/photo-camera.png"
+        "path": "/symbols/photo-camera.png"
     },
     {
         "id": 31,
         "codeName": "photos",
-        "path": "symbols/photos.png"
+        "path": "/symbols/photos.png"
     },
     {
         "id": 32,
         "codeName": "settings-4",
-        "path": "symbols/settings-4.png"
+        "path": "/symbols/settings-4.png"
     },
     {
         "id": 33,
         "codeName": "sign-1",
-        "path": "symbols/sign-1.png"
+        "path": "/symbols/sign-1.png"
     },
     {
         "id": 34,
         "codeName": "speaker-6",
-        "path": "symbols/speaker-6.png"
+        "path": "/symbols/speaker-6.png"
     },
     {
         "id": 35,
         "codeName": "spotlight",
-        "path": "symbols/spotlight.png"
+        "path": "/symbols/spotlight.png"
     },
     {
         "id": 36,
         "codeName": "target",
-        "path": "symbols/target.png"
+        "path": "/symbols/target.png"
     },
     {
         "id": 37,
         "codeName": "umbrella",
-        "path": "symbols/umbrella.png"
+        "path": "/symbols/umbrella.png"
     },
     {
         "id": 38,
         "codeName": "user-1",
-        "path": "symbols/user-1.png"
+        "path": "/symbols/user-1.png"
     },
     {
         "id": 39,
         "codeName": "user",
-        "path": "symbols/user.png"
+        "path": "/symbols/user.png"
     },
     {
         "id": 40,
         "codeName": "video-camera",
-        "path": "symbols/video-camera.png"
+        "path": "/symbols/video-camera.png"
     },
     {
         "id": 41,
         "codeName": "worldwide-1",
-        "path": "symbols/worldwide-1.png"
+        "path": "/symbols/worldwide-1.png"
     }
 ]

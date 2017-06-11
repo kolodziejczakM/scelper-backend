@@ -11,7 +11,7 @@ class PublicScenariosController {
     static prepareForDB(req) {
         const pdfData = new Uint8Array(fs.readFileSync(req.file.path)),
               genre = JSON.parse(req.body.genre),
-              state = JSON.parse(req.body.state),   
+              state = JSON.parse(req.body.state),
               deleteCode = this.getDeleteCode(),
               pdfDocumentReady = this.getPDF(pdfData);
         
