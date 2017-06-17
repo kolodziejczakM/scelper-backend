@@ -37,7 +37,7 @@ exports.getHTML = (deleteCode, activationLink) => {
                 </tr>
                 <tr>
                     <td align="left" style="font-family: arial,sans-serif; font-size: 14px; line-height: 20px !important; color: #666; padding-bottom: 20px;">
-                       Klikając w link aktywacyjny potwierdzasz, że zapoznałeś się z <a href="${config.producionRootURL}/documents/Scelper-regulamin.pdf">regulaminem serwisu Scelper.com</a>.
+                       Klikając w link aktywacyjny potwierdzasz, że zapoznałeś się z <a href="${config.productionRootURL}/documents/Scelper-regulamin.pdf">regulaminem serwisu Scelper.com</a>.
                     </td>
                 </tr>
                 <tr>
