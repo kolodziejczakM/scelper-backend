@@ -1,4 +1,4 @@
-
+const config = require('../configurations/config');
 
 exports.getHTML = (deleteCode, activationLink) => {
     return `
@@ -33,6 +33,11 @@ exports.getHTML = (deleteCode, activationLink) => {
                 <tr>
                     <td align="left" style="font-family: arial,sans-serif; font-size: 14px; line-height: 20px !important; color: #666; padding-bottom: 20px;">
                        Twój scenariusz pojawi się na stronie po tym jak klikniesz w link aktywacyjny.
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="font-family: arial,sans-serif; font-size: 14px; line-height: 20px !important; color: #666; padding-bottom: 20px;">
+                       Klikając w link aktywacyjny potwierdzasz, że zapoznałeś się z <a href="${config.producionRootURL}/documents/Scelper-regulamin.pdf">regulaminem serwisu Scelper.com</a>.
                     </td>
                 </tr>
                 <tr>

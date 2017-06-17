@@ -4,7 +4,8 @@ const express = require('express'),
       fs = require('fs'),
       corsMiddleware = require('../middlewares/cors.middleware'),
       MulterMiddleware = require('../middlewares/multer.middleware'),
-      uploadPDF = new MulterMiddleware().uploadPDF;
+      uploadPDF = new MulterMiddleware().uploadPDF,
+      config = require('../configurations/config');
 
 const commonConstants = require('../constants/common.constants');
 
@@ -91,7 +92,7 @@ router.post('/public-scenarios', function(req, res) {
                     return res.status(400).json(SCENARIO_ERRORS.SCENARIO_DB_SAVE);
                 }
 
-                const activationUrl = `http://localhost:4200/#/activation/${scenario.deleteCode}`,
+                const activationUrl = `${config.serverRoot}/beta/#/activation/${scenario.deleteCode}`,
                       mail = new MailingScenariosService(req.body.authorEmail, scenario.deleteCode, activationUrl);
             
                 mail.transport().sendMail(mail.mailOptions, (error, info) => {
