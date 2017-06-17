@@ -4,7 +4,7 @@ const express = require('express'),
       logger = require('morgan'),
       cookieParser = require('cookie-parser'),
       bodyParser = require('body-parser'),
-      mongoose = require('mongoose');
+      config = require('./configurations/config');
 
 const index = require('./routes/index'),
       api = require('./routes/api');
@@ -25,10 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/api/v1', api);
 
-// mongoose
-mongoose.connect('mongodb://localhost/scelper_db');
-mongoose.Promise = global.Promise;
-//mongoose.connect('mongodb://mo1780_scelper:Kolo1234@mongo.ct8.pl/mo1780_scelper');
+config.database.connect();
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
