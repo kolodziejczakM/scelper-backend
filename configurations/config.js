@@ -19,7 +19,7 @@ exports.databaseAuth = {
     dbPassword: 'Kolo1234'
 };
 
-exports.database.connect = () => {
+exports.databaseConnect = () => {
     mongoose.Promise = global.Promise;
 
     if (this.productionEnv) {
