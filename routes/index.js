@@ -1,6 +1,7 @@
 const express = require('express'),
       router = express.Router(),
       fs = require('fs'),
+      path = require('path'),
       corsMiddleware = require('../middlewares/cors.middleware');
 
 const commonConstants = require('../constants/common.constants');
@@ -15,7 +16,11 @@ const COMMON_ERRORS = commonConstants.ERRORS,
 corsMiddleware.letLocalhost(router);
 
 router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Express' });
+    res.sendFile(path.join(__dirname + '/../views/index.html'));
+});
+
+router.get('/beta', function(req, res, next) {
+    res.sendFile(path.join(__dirname + '/../views/singlePageApp/index.html'));   
 });
 
 router.patch('/activation/:deleteCode', function (req, res, next) {
