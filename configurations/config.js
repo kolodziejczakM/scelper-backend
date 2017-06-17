@@ -23,7 +23,7 @@ exports.databaseConnect = () => {
     mongoose.Promise = global.Promise;
 
     if (this.productionEnv) {
-        mongoose.connect(`mongodb://${databaseAuth.dbName}:${databaseAuth.dbPassword}@${databaseAuth.dbServer}/${databaseAuth.dbName}`);
+        mongoose.connect(`mongodb://${this.databaseAuth.dbName}:${this.databaseAuth.dbPassword}@${this.databaseAuth.dbServer}/${this.databaseAuth.dbName}`);
     } else {
         mongoose.connect(`mongodb://localhost/scelper_db`);
     }
