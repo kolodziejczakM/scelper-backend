@@ -1,5 +1,5 @@
 
-const path = require('path'), 
+const path = require('path'),
       multer = require('multer');
 
 const constants = require('../constants/common.constants'),
@@ -16,25 +16,25 @@ class MulterMiddleware {
     constructor() {
 
         this.storagePDF = multer.diskStorage({
-            destination: function (req, file, cb) {
-                cb(null, './public/uploads/tmp/pdf/')
+            destination: function(req, file, cb) {
+                cb(null, './public/uploads/tmp/pdf/');
             },
-            filename: function (req, file, cb) {
+            filename: function(req, file, cb) {
                 let nameParts = file.originalname.replace(/\s+/g, '_');
                 nameParts = nameParts.split('.');
                 nameParts.pop();
                 const namePart = nameParts.join('.');
-                cb(null, namePart + '-'+'scelper.com-'+ Date.now() +  path.extname(file.originalname))
+                cb(null, namePart + '-'+'scelper.com-'+ Date.now() + path.extname(file.originalname));
             }
         });
 
-        this.uploadPDF = multer({ 
+        this.uploadPDF = multer({
             storage: this.storagePDF,
-            limits: { 
+            limits: {
                 files: 1,
-                fileSize: 200 * KILO_BYTE 
+                fileSize: 200 * KILO_BYTE
             },
-            fileFilter: function (req, file, cb) {
+            fileFilter: function(req, file, cb) {
 
                 const validExtension = (file.originalname.split('.').pop() === ACCEPTABLE_EXTENSION),
                       validMimetype = (file.mimetype === ACCEPTABLE_MIMETYPE);
@@ -46,14 +46,14 @@ class MulterMiddleware {
                 }
 
                 publicScenariosModel.getScenarioByAuthorAndTitle(req.body.authorEmail, req.body.title)
-                                                       .exec(function(err, data){
-                    
-                    if(err) {
+                                    .exec(function(err, data) {
+
+                    if (err) {
                         console.log(err);
                         return cb(new Error(err), false);
                     }
 
-                    if(data.length > 0){
+                    if (data.length > 0) {
                         console.log(SCENARIO_ERRORS.ALREADY_EXISTS.msg);
                         return cb(new Error(SCENARIO_ERRORS.ALREADY_EXISTS), false);
                     }

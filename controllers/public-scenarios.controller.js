@@ -14,10 +14,9 @@ class PublicScenariosController {
               state = JSON.parse(req.body.state),
               deleteCode = this.getDeleteCode(),
               pdfDocumentReady = this.getPDF(pdfData);
-        
 
         return pdfDocumentReady.then(pdfDocument => {
-            
+
             const scenario = publicScenariosModel.createScenarioEntity(
                 req,
                 genre,

@@ -1,4 +1,3 @@
-
 const express = require('express'),
       router = express.Router(),
       fs = require('fs'),
@@ -30,12 +29,12 @@ const PDFDocument = require('pdfkit');
 corsMiddleware.letLocalhost(router);
 
 
-router.get('/random-symbols',function(req ,res, next) {
+router.get('/random-symbols', function(req, res, next) {
 
     const amount = Number(req.query.amount);
 
     symbolsModel.getRandom(amount).exec(function(err, data) {
-        if(err) {
+        if (err) {
             console.log(err);
             return res.status(400).json(COMMON_ERRORS.COMMON_DOWNLOAD);
         } else {
@@ -44,10 +43,10 @@ router.get('/random-symbols',function(req ,res, next) {
     });
 });
 
-router.get('/interview-questions',function(req ,res, next) {
+router.get('/interview-questions', function(req, res, next) {
 
-    interviewQuestionsModel.getAll().exec(function(err, data){
-        if(err) {
+    interviewQuestionsModel.getAll().exec(function(err, data) {
+        if (err) {
             console.log(err);
             return res.status(503).json(COMMON_ERRORS.COMMON_DOWNLOAD);
         } else {
@@ -56,13 +55,13 @@ router.get('/interview-questions',function(req ,res, next) {
     });
 });
 
-router.get('/public-scenarios',function(req ,res, next){
+router.get('/public-scenarios', function(req, res, next) {
 
     publicScenariosModel.getPublicScenarios().exec(function(err, data) {
-        if(err) {
+        if (err) {
             console.log(err);
             return res.status(503).json(COMMON_ERRORS.COMMON_DOWNLOAD);
-        } else{
+        } else {
             return res.json(data);
         }
     });
@@ -75,26 +74,26 @@ router.post('/interview-summary', function(req, res) {
 });
 
 router.post('/public-scenarios', function(req, res) {
-    
+
     uploadPDF.single(SCENARIO_FORM_FIELD_NAME)(req, res, function(err) {
 
-        if(err) {
+        if (err) {
             console.log(err);
             return res.status(400).json(COMMON_ERRORS.COMMON_UPLOAD);
         }
 
         const scenarioPrepared = publicScenariosController.prepareForDB(req);
-        
+
         scenarioPrepared.then(scenario => {
             scenario.save((err) => {
-                if (err) {  
+                if (err) {
                     console.log(err);
                     return res.status(400).json(SCENARIO_ERRORS.SCENARIO_DB_SAVE);
                 }
 
                 const activationUrl = `${config.serverRoot}/beta/#/activation/${scenario.deleteCode}`,
                       mail = new MailingScenariosService(req.body.authorEmail, scenario.deleteCode, activationUrl);
-            
+
                 mail.transport().sendMail(mail.mailOptions, (error, info) => {
                     if (error) {
                         console.log(SCENARIO_ERRORS.MAIL_SENDING.msg, error);
@@ -111,32 +110,32 @@ router.post('/public-scenarios', function(req, res) {
 
 router.delete('/public-scenarios/:deleteCode', function(req, res, next) {
 
-    publicScenariosModel.getScenarioByDeleteCode(req.params.deleteCode).exec(function(err, scenario){
+    publicScenariosModel.getScenarioByDeleteCode(req.params.deleteCode).exec(function(err, scenario) {
 
-        if(err) {
+        if (err) {
             console.log(SCENARIO_ERRORS.SCENARIO_DB_REMOVE.msg, err);
             return res.status(503).json(SCENARIO_ERRORS.SCENARIO_DB_REMOVE);
         }
 
-        if(!scenario){
+        if (!scenario) {
             console.log(SCENARIO_ERRORS.NOT_EXISTS.msg);
             return res.status(404).json(SCENARIO_ERRORS.NOT_EXISTS);
         }
 
-        const newPath = scenario.path.replace('/pdf','/deleted/pdf'),
+        const newPath = scenario.path.replace('/pdf', '/deleted/pdf'),
               oldPath = scenario.path;
-           
-        const scenarioRemoved = scenario.remove(function (err) {
-            if(err) {
+
+        const scenarioRemoved = scenario.remove(function(err) {
+            if (err) {
                 console.log(SCENARIO_ERRORS.SCENARIO_DB_REMOVE.msg, err);
                 return res.status(503).json(SCENARIO_ERRORS.SCENARIO_DB_REMOVE);
             }
         });
-        
+
         scenarioRemoved.then((scenario) => {
 
-            fs.rename(oldPath, newPath, function (err) {
-                if(err) {
+            fs.rename(oldPath, newPath, function(err) {
+                if (err) {
                     console.log(SCENARIO_ERRORS.SCENARIO_FILE_REMOVE.msg, err); 
                     return res.status(500).json(SCENARIO_ERRORS.SCENARIO_FILE_REMOVE);
                 }
