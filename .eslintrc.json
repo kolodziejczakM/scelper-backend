@@ -1,0 +1,18 @@
+{
+    "root": true,
+    "env": {
+        "browser": false,
+        "node": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 6
+    },
+    "extends": "google",
+    "rules": {
+        "require-jsdoc": 0,
+        "one-var": 0,
+        "object-curly-spacing": 0,
+        "max-len": [2, 90],
+        "comma-dangle": 0
+    }
+}
