@@ -20,6 +20,10 @@ exports.ERRORS = {
         msg: 'ERROR while removing scenario from database.',
         code: 'SCENARIO_DB_REMOVE'
     },
+    SCENARIO_REQUEST_DB_SAVE: {
+        msg: 'There was a problem with saving scenario request. Database connection failed.',
+        code: 'SCENARIO_REQUEST_DB_SAVE'
+    },
     SCENARIO_FILE_UPDATE: {
         msg: 'There was a problem with updating scenario file.',
         code: 'SCENARIO_FILE_UPDATE'

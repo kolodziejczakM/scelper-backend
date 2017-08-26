@@ -1,10 +1,8 @@
-
 const fs = require('fs'),
       PDFJS = require('pdfjs-dist'),
       uuidV4 = require('uuid/v4');
 
-const publicScenariosModel = require('../models/public-scenarios.model'),
-      publicScenariosConstants = require('../constants/public-scenarios.constants');
+const publicScenariosModel = require('../models/public-scenarios.model');
 
 class PublicScenariosController {
 

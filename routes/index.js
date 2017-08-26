@@ -20,7 +20,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/beta', function(req, res, next) {
-    res.sendFile(path.join(__dirname + '/../views/singlePageApp/index.html'));   
+    res.sendFile(path.join(__dirname + '/../views/singlePageApp/index.html'));
 });
 
 router.patch('/activation/:deleteCode', function (req, res, next) {
