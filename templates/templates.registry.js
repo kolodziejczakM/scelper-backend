@@ -6,14 +6,12 @@ const templatesRegistry = {
     newScenarioRequestTemplate
 };
 
-exports.getTemplate = (templateName) => {
+exports.getTemplate = (name) => {
+    const template = Object.keys(templatesRegistry).find(template => template === name);
 
-    return Object.keys(templatesRegistry).find(template => {
-        if (template === templateName) {
-            return {
-                getHTML: templatesRegistry[template].getHTML,
-                getOptions: templatesRegistry[template].getOptions
-            };
-        }
-    });
+    if (!template) {
+        console.warn(`Cannot find template: ${name}`);
+    }
+
+    return templatesRegistry[template];
 };

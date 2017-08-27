@@ -4,12 +4,17 @@ class ActivationMailingService extends MailingService {
 
     constructor(addressee, deleteCode, activationLink, templateName) {
         super();
-
+        this.addressee = addressee;
+        this.deleteCode = deleteCode;
+        this.activationLink = activationLink;
         this.template = super.getTemplate(templateName);
-        this.details = Object.assign(
+    }
+
+    getDetails() {
+        return Object.assign(
             {
-                to: addressee,
-                html: this.template.getHTML(deleteCode, activationLink)
+                to: this.addressee,
+                html: this.template.getHTML(this.deleteCode, this.activationLink)
             },
             this.template.getOptions()
         );

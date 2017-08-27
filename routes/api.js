@@ -101,7 +101,7 @@ router.post('/public-scenarios', function(req, res) {
                     'newScenarioTemplate'
                 );
 
-                mail.transport().sendMail(mail.details, (error, info) => {
+                mail.transport().sendMail(mail.getDetails(), (error, info) => {
                     if (error) {
                         console.log(SCENARIO_ERRORS.MAIL_SENDING.msg, error);
                         return res.status(400).json(SCENARIO_ERRORS.MAIL_SENDING);
@@ -116,32 +116,30 @@ router.post('/public-scenarios', function(req, res) {
 });
 
 router.post('/public-scenarios/requests', function(req, res) {
-    console.log('req, req.body: ', req.body);
+
     const scenarioRequestPrepared = publicScenariosRequestsController.prepareForDB(req);
 
-    scenarioRequestPrepared.then(scenarioRequest => {
-        scenarioRequest.save((err) => {
-            if (err) {
-                console.log(err);
-                return res.status(400).json(SCENARIO_ERRORS.SCENARIO_REQUEST_DB_SAVE);
+    scenarioRequestPrepared.save((err) => {
+        if (err) {
+            console.log(err);
+            return res.status(400).json(SCENARIO_ERRORS.SCENARIO_REQUEST_DB_SAVE);
+        }
+
+        const activationUrl = `${config.serverRoot}/beta/#/public-scenarios/requests/activation/${scenarioRequestPrepared.deleteCode}`;
+        const mail = new ActivationMailingService(
+            req.body.requestAuthorEmail,
+            scenarioRequestPrepared.deleteCode,
+            activationUrl,
+            'newScenarioRequestTemplate'
+        );
+
+        mail.transport().sendMail(mail.getDetails(), (error, info) => {
+            if (error) {
+                console.log(SCENARIO_ERRORS.MAIL_SENDING.msg, error);
+                return res.status(400).json(SCENARIO_ERRORS.MAIL_SENDING);
             }
-
-            const activationUrl = `${config.serverRoot}/beta/#/public-scenarios/requests/activation/${scenario.deleteCode}`;
-            const mail = new ActivationMailingService(
-                req.body.requestAuthorEmail,
-                scenarioRequest.deleteCode,
-                activationUrl,
-                'newScenarioRequestTemplate'
-            );
-
-            mail.transport().sendMail(mail.details, (error, info) => {
-                if (error) {
-                    console.log(SCENARIO_ERRORS.MAIL_SENDING.msg, error);
-                    return res.status(400).json(SCENARIO_ERRORS.MAIL_SENDING);
-                }
-                console.log(SCENARIO_SUCCESSES.MAIL_SENT.msg, info.messageId, info.response);
-                return res.json(SCENARIO_SUCCESSES.MAIL_SENT);
-            });
+            console.log(SCENARIO_SUCCESSES.MAIL_SENT.msg, info.messageId, info.response);
+            return res.json(SCENARIO_SUCCESSES.MAIL_SENT);
         });
     });
 });
