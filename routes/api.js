@@ -3,8 +3,7 @@ const express = require('express'),
       fs = require('fs'),
       corsMiddleware = require('../middlewares/cors.middleware'),
       MulterMiddleware = require('../middlewares/multer.middleware'),
-      uploadPDF = new MulterMiddleware().uploadPDF,
-      config = require('../configurations/config');
+      uploadPDF = new MulterMiddleware().uploadPDF;
 
 const commonConstants = require('../constants/common.constants');
 
@@ -13,7 +12,9 @@ const publicScenariosConstants = require('../constants/public-scenarios.constant
       publicScenariosController = require('../controllers/public-scenarios.controller'),
       ActivationMailingService = require('../services/activation-mailing.service');
 
-const publicScenariosRequestsController = require('../controllers/public-scenarios-requests.controller');
+const publicScenariosRequestsConstants = require('../constants/public-scenarios-requests.constants'),
+      publicScenariosRequestsModel = require('../models/public-scenarios-requests.model'),
+      publicScenariosRequestsController = require('../controllers/public-scenarios-requests.controller');
 
 const summaryGeneratorService = require('../services/summary-generator.service');
 
@@ -22,9 +23,13 @@ const interviewQuestionsModel = require('../models/interview-questions.model');
 const symbolsModel = require('../models/symbols.model');
 
 const COMMON_ERRORS = commonConstants.ERRORS,
+      COMMON_SUCCESSES = commonConstants.SUCCESSES,
       SCENARIO_ERRORS = publicScenariosConstants.ERRORS,
       SCENARIO_SUCCESSES = publicScenariosConstants.SUCCESSES,
       SCENARIO_FORM_FIELD_NAME = publicScenariosConstants.SCENARIO_FORM_FIELD_NAME;
+
+const SCENARIO_REQUESTS_ERRORS = publicScenariosRequestsConstants.ERRORS,
+      SCENARIO_REQUESTS_SUCCESSES = publicScenariosRequestsConstants.SUCCESSES;
 
 const PDFDocument = require('pdfkit');
 
@@ -69,6 +74,18 @@ router.get('/public-scenarios', function(req, res, next) {
     });
 });
 
+router.get('/public-scenarios/requests', function(req, res, next) {
+
+    publicScenariosRequestsModel.getPublicScenariosRequests().exec(function(err, data) {
+        if (err) {
+            console.log(err);
+            return res.status(503).json(COMMON_ERRORS.COMMON_DOWNLOAD);
+        } else {
+            return res.json(data);
+        }
+    });
+});
+
 router.post('/interview-summary', function(req, res) {
     const doc = summaryGeneratorService.streamSummaryPDF(req.body);
     doc.end();
@@ -93,7 +110,7 @@ router.post('/public-scenarios', function(req, res) {
                     return res.status(400).json(SCENARIO_ERRORS.SCENARIO_DB_SAVE);
                 }
 
-                const activationUrl = `${config.serverRoot}/beta/#/public-scenarios/activation/${scenario.deleteCode}`;
+                const activationUrl = `${commonConstants.ACTIVATION_PAGES.NEW_SCENARIO}${scenario.deleteCode}`;
                 const mail = new ActivationMailingService(
                     req.body.authorEmail,
                     scenario.deleteCode,
@@ -103,11 +120,11 @@ router.post('/public-scenarios', function(req, res) {
 
                 mail.transport().sendMail(mail.getDetails(), (error, info) => {
                     if (error) {
-                        console.log(SCENARIO_ERRORS.MAIL_SENDING.msg, error);
-                        return res.status(400).json(SCENARIO_ERRORS.MAIL_SENDING);
+                        console.log(COMMON_ERRORS.MAIL_SENDING.msg, error);
+                        return res.status(400).json(COMMON_ERRORS.MAIL_SENDING);
                     }
-                    console.log(SCENARIO_SUCCESSES.MAIL_SENT.msg, info.messageId, info.response);
-                    return res.json(SCENARIO_SUCCESSES.MAIL_SENT);
+                    console.log(COMMON_SUCCESSES.MAIL_SENT.msg, info.messageId, info.response);
+                    return res.json(COMMON_SUCCESSES.MAIL_SENT);
                 });
             });
         });
@@ -122,10 +139,10 @@ router.post('/public-scenarios/requests', function(req, res) {
     scenarioRequestPrepared.save((err) => {
         if (err) {
             console.log(err);
-            return res.status(400).json(SCENARIO_ERRORS.SCENARIO_REQUEST_DB_SAVE);
+            return res.status(400).json(SCENARIO_REQUESTS_ERRORS.SCENARIO_REQUEST_DB_SAVE);
         }
 
-        const activationUrl = `${config.serverRoot}/beta/#/public-scenarios/requests/activation/${scenarioRequestPrepared.deleteCode}`;
+        const activationUrl = `${commonConstants.ACTIVATION_PAGES.NEW_SCENARIO_REQUEST}${scenarioRequestPrepared.deleteCode}`;
         const mail = new ActivationMailingService(
             req.body.requestAuthorEmail,
             scenarioRequestPrepared.deleteCode,
@@ -135,11 +152,11 @@ router.post('/public-scenarios/requests', function(req, res) {
 
         mail.transport().sendMail(mail.getDetails(), (error, info) => {
             if (error) {
-                console.log(SCENARIO_ERRORS.MAIL_SENDING.msg, error);
-                return res.status(400).json(SCENARIO_ERRORS.MAIL_SENDING);
+                console.log(COMMON_ERRORS.MAIL_SENDING.msg, error);
+                return res.status(400).json(COMMON_ERRORS.MAIL_SENDING);
             }
-            console.log(SCENARIO_SUCCESSES.MAIL_SENT.msg, info.messageId, info.response);
-            return res.json(SCENARIO_SUCCESSES.MAIL_SENT);
+            console.log(COMMON_SUCCESSES.MAIL_SENT.msg, info.messageId, info.response);
+            return res.json(COMMON_SUCCESSES.MAIL_SENT);
         });
     });
 });
@@ -181,6 +198,32 @@ router.delete('/public-scenarios/:deleteCode', function(req, res, next) {
 
     });
 
+});
+
+router.delete('/public-scenarios/requests/:deleteCode', function(req, res, next) {
+
+    publicScenariosRequestsModel.getScenarioRequestByDeleteCode(req.params.deleteCode)
+                                .exec(function(err, scenarioRequest) {
+        if (err) {
+            console.log(SCENARIO_REQUESTS_ERRORS.SCENARIO_REQUEST_DB_REMOVE.msg, err);
+            return res.status(503).json(SCENARIO_REQUESTS_ERRORS.SCENARIO_REQUEST_DB_REMOVE);
+        }
+
+        if (!scenarioRequest) {
+            console.log(SCENARIO_REQUESTS_ERRORS.SCENARIO_REQUEST_NOT_EXISTS.msg);
+            return res.status(404).json(SCENARIO_REQUESTS_ERRORS.SCENARIO_REQUEST_NOT_EXISTS);
+        }
+
+        scenarioRequest.remove(function(err) {
+            if (err) {
+                console.log(SCENARIO_REQUESTS_ERRORS.SCENARIO_REQUEST_DB_REMOVE.msg, err);
+                return res.status(503).json(SCENARIO_ERRORS.SCENARIO_REQUEST_DB_REMOVE);
+            }
+
+            return res.json(SCENARIO_REQUESTS_SUCCESSES.SCENARIO_REQUEST_REMOVED);
+        });
+
+    });
 });
 
 module.exports = router;

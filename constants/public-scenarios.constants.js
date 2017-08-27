@@ -20,10 +20,6 @@ exports.ERRORS = {
         msg: 'ERROR while removing scenario from database.',
         code: 'SCENARIO_DB_REMOVE'
     },
-    SCENARIO_REQUEST_DB_SAVE: {
-        msg: 'There was a problem with saving scenario request. Database connection failed.',
-        code: 'SCENARIO_REQUEST_DB_SAVE'
-    },
     SCENARIO_FILE_UPDATE: {
         msg: 'There was a problem with updating scenario file.',
         code: 'SCENARIO_FILE_UPDATE'
@@ -39,18 +35,10 @@ exports.ERRORS = {
     NOT_EXISTS: {
         msg: 'ERROR cannot delete that scenario, it does not exist',
         code: 'NOT_EXISTS'
-    },
-    MAIL_SENDING: {
-        msg: 'Error while sending email.',
-        code: 'MAIL_SENDING'
     }
 };
 
 exports.SUCCESSES = {
-    MAIL_SENT: {
-        msg: 'Message sent.',
-        code: 'MAIL_SENT'
-    },
     SCENARIO_UPDATED: {
         msg: 'Scenario has been successfully updated.',
         code: 'SCENARIO_UPDATED'
