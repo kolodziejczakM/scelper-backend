@@ -11,7 +11,7 @@ const commonConstants = require('../constants/common.constants');
 const publicScenariosConstants = require('../constants/public-scenarios.constants'),
       publicScenariosModel = require('../models/public-scenarios.model'),
       publicScenariosController = require('../controllers/public-scenarios.controller'),
-      MailingScenariosService = require('../services/mailing-scenarios.service');
+      ActivationMailingService = require('../services/activation-mailing.service');
 
 const publicScenariosRequestsController = require('../controllers/public-scenarios-requests.controller');
 
@@ -93,10 +93,15 @@ router.post('/public-scenarios', function(req, res) {
                     return res.status(400).json(SCENARIO_ERRORS.SCENARIO_DB_SAVE);
                 }
 
-                const activationUrl = `${config.serverRoot}/beta/#/activation/${scenario.deleteCode}`,
-                      mail = new MailingScenariosService(req.body.authorEmail, scenario.deleteCode, activationUrl);
+                const activationUrl = `${config.serverRoot}/beta/#/activation/${scenario.deleteCode}`;
+                const mail = new ActivationMailingService(
+                    req.body.authorEmail,
+                    scenario.deleteCode,
+                    activationUrl,
+                    'newScenarioTemplate'
+                );
 
-                mail.transport().sendMail(mail.mailOptions, (error, info) => {
+                mail.transport().sendMail(mail.details, (error, info) => {
                     if (error) {
                         console.log(SCENARIO_ERRORS.MAIL_SENDING.msg, error);
                         return res.status(400).json(SCENARIO_ERRORS.MAIL_SENDING);
@@ -106,7 +111,7 @@ router.post('/public-scenarios', function(req, res) {
                 });
             });
         });
-        
+
     });
 });
 
@@ -122,13 +127,14 @@ router.post('/public-scenarios/requests', function(req, res) {
             }
 
             const activationUrl = `${config.serverRoot}/beta/#/public-scenarios/requests/activation/${scenario.deleteCode}`;
-            const mail = new MailingScenariosService(
+            const mail = new ActivationMailingService(
                 req.body.requestAuthorEmail,
                 scenarioRequest.deleteCode,
-                activationUrl
+                activationUrl,
+                'newScenarioRequestTemplate'
             );
 
-            mail.transport().sendMail(mail.mailOptions, (error, info) => {
+            mail.transport().sendMail(mail.details, (error, info) => {
                 if (error) {
                     console.log(SCENARIO_ERRORS.MAIL_SENDING.msg, error);
                     return res.status(400).json(SCENARIO_ERRORS.MAIL_SENDING);
@@ -168,7 +174,7 @@ router.delete('/public-scenarios/:deleteCode', function(req, res, next) {
 
             fs.rename(oldPath, newPath, function(err) {
                 if (err) {
-                    console.log(SCENARIO_ERRORS.SCENARIO_FILE_REMOVE.msg, err); 
+                    console.log(SCENARIO_ERRORS.SCENARIO_FILE_REMOVE.msg, err);
                     return res.status(500).json(SCENARIO_ERRORS.SCENARIO_FILE_REMOVE);
                 }
                 return res.json(SCENARIO_SUCCESSES.SCENARIO_REMOVED);

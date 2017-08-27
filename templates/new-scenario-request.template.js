@@ -3,7 +3,7 @@ const config = require('../configurations/config');
 exports.getOptions = () => {
     return {
         from: '"SCELPER.COM" <administracja@scelper.com>',
-        subject: 'Scenarzysto... Dziękujemy!',
+        subject: 'Potwierdzenie dodania zlecenia',
         text: '',
         attachments: [{
             filename: 'scelper-logo.png',
@@ -49,7 +49,7 @@ exports.getHTML = (deleteCode, activationLink) => {
                 </tr>
                 <tr>
                     <td align="left" style="font-family: arial,sans-serif; font-size: 14px; line-height: 20px !important; color: #666; padding-bottom: 20px;">
-                       Twój scenariusz pojawi się na stronie po tym jak klikniesz w link aktywacyjny.
+                       Twoje zlecenie pojawi się na stronie po tym jak klikniesz w link aktywacyjny.
                     </td>
                 </tr>
                 <tr>
@@ -70,7 +70,7 @@ exports.getHTML = (deleteCode, activationLink) => {
                 </tr>
                 <tr>
                     <td align="left" style="font-family: arial,sans-serif; font-size: 14px; line-height: 20px !important; color: #666; padding-bottom: 20px;">
-                        Aby usunąć swój scenariusz wejdź na scelper.com i skorzystaj z kodu usunięcia: 
+                        Aby usunąć swoje zlecenie wejdź na scelper.com i skorzystaj z kodu usunięcia: 
                     </td>
                 </tr>
                 <tr>
