@@ -93,7 +93,7 @@ router.post('/public-scenarios', function(req, res) {
                     return res.status(400).json(SCENARIO_ERRORS.SCENARIO_DB_SAVE);
                 }
 
-                const activationUrl = `${config.serverRoot}/beta/#/activation/${scenario.deleteCode}`;
+                const activationUrl = `${config.serverRoot}/beta/#/public-scenarios/activation/${scenario.deleteCode}`;
                 const mail = new ActivationMailingService(
                     req.body.authorEmail,
                     scenario.deleteCode,
