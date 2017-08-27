@@ -23,5 +23,9 @@ exports.ERRORS = {
     COMMON_DB: {
         msg: 'There was a problem with database connection. Please Try again.',
         code: 'COMMON_DB'
+    },
+    DELETE_CODE_NOT_EXISTS: {
+        msg: 'ERROR delete code does not exist',
+        code: 'DELETE_CODE_NOT_EXISTS'
     }
 };

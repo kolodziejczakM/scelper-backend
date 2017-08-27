@@ -43,10 +43,6 @@ exports.ERRORS = {
     MAIL_SENDING: {
         msg: 'Error while sending email.',
         code: 'MAIL_SENDING'
-    },
-    DELETE_CODE_NOT_EXISTS: {
-        msg: 'ERROR delete code does not exist',
-        code: 'DELETE_CODE_NOT_EXISTS'
     }
 };
 
