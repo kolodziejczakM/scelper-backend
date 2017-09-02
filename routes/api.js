@@ -87,7 +87,7 @@ router.get('/public-scenarios/requests', function(req, res, next) {
     });
 });
 
-router.post('/api/v1/tts', function(req, res, next) {
+router.post('/tts', function(req, res, next) {
 
     if (!req.body.text) {
         return res.status(400).json(COMMON_ERRORS.TTS_NEEDS_TEXT);
