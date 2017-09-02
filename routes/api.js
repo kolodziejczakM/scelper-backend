@@ -3,7 +3,8 @@ const express = require('express'),
       fs = require('fs'),
       corsMiddleware = require('../middlewares/cors.middleware'),
       MulterMiddleware = require('../middlewares/multer.middleware'),
-      uploadPDF = new MulterMiddleware().uploadPDF;
+      uploadPDF = new MulterMiddleware().uploadPDF,
+      tts = require('../voice-rss-tts/index.js');
 
 const commonConstants = require('../constants/common.constants');
 
@@ -82,6 +83,33 @@ router.get('/public-scenarios/requests', function(req, res, next) {
             return res.status(503).json(COMMON_ERRORS.COMMON_DOWNLOAD);
         } else {
             return res.json(data);
+        }
+    });
+});
+
+router.post('/api/v1/tts', function(req, res, next) {
+
+    if (!req.body.text) {
+        return res.status(400).json(COMMON_ERRORS.TTS_NEEDS_TEXT);
+    }
+
+    tts.speech({
+        key: '92771de09e6141e1b5a8c2c1ec44c8c0',
+        src: req.body.text,
+        hl: 'pl-pl',
+        r: 0,
+        c: 'ogg',
+        f: '8khz_8bit_mono',
+        ssml: false,
+        b64: true,
+        callback(err, content) {
+            console.log(err || content);
+
+            if (err) {
+                return res.status(503).json(COMMON_ERRORS.EXTERNAL_PROVIDER);
+            }
+
+            return res.send(content);
         }
     });
 });

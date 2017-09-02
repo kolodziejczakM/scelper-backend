@@ -37,6 +37,14 @@ exports.ERRORS = {
     MAIL_SENDING: {
         msg: 'Error while sending email.',
         code: 'MAIL_SENDING'
+    },
+    TTS_NEEDS_TEXT: {
+        msg: 'Error while validating user input. There is no text.',
+        code: 'TTS_NEEDS_TEXT'
+    },
+    EXTERNAL_PROVIDER: {
+        msg: 'Error while connecting with external service provider.',
+        code: 'EXTERNAL_PROVIDER'
     }
 };
 
