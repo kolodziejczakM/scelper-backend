@@ -90,7 +90,7 @@ router.get('/public-scenarios/requests', function(req, res, next) {
 router.post('/tts', function(req, res, next) {
 
     if (!req.body.text) {
-        return res.status(400).json(COMMON_ERRORS.TTS_NEEDS_TEXT);
+        return res.status(400).send(COMMON_ERRORS.TTS_NEEDS_TEXT);
     }
 
     tts.speech({
@@ -106,7 +106,8 @@ router.post('/tts', function(req, res, next) {
             console.log(err || content);
 
             if (err) {
-                return res.status(503).json(COMMON_ERRORS.EXTERNAL_PROVIDER);
+                console.log(err);
+                return res.status(503).send(COMMON_ERRORS.EXTERNAL_PROVIDER);
             }
 
             return res.send(content);
