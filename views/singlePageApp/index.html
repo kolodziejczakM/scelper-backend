@@ -4,14 +4,27 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="author" content="Marcin Kołodziejczak">
+
         <title>Scelper.com - aplikacja progresywna dla scenarzystów filmowych</title>
 
         <base href="/beta">
         <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link href="styles.7adb5c05cbe113cf707d.bundle.css" rel="stylesheet"/></head>
+        <script>
+            window.recaptchasLoaded = () => new Promise((res, err) =>  window.grecaptcha ? res() : err());
+        </script>
+        <script src="https://www.google.com/recaptcha/api.js?onload=recaptchasLoaded&render=explicit" async defer></script>
+    <link href="styles.567fce8de8bb8b1af845.bundle.css" rel="stylesheet"/></head>
     <body>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-102621586-1', 'auto');
+        </script>
         <sce-root>
             <div class="loader--bootstrapping"></div>
         </sce-root>
-    <script type="text/javascript" src="inline.631c6d3e0b871c97ce18.bundle.js"></script><script type="text/javascript" src="polyfills.2d45a4c73c85e24fe474.bundle.js"></script><script type="text/javascript" src="vendor.5b64c38770f6300e0e96.bundle.js"></script><script type="text/javascript" src="main.21ca02a60861c37b1a59.bundle.js"></script></body>
+    <script type="text/javascript" src="inline.6cb27bea075038634a97.bundle.js"></script><script type="text/javascript" src="polyfills.2d45a4c73c85e24fe474.bundle.js"></script><script type="text/javascript" src="vendor.ab1849e1f38c0dde43b2.bundle.js"></script><script type="text/javascript" src="main.411d0a253d96b02e3d2e.bundle.js"></script></body>
 </html>
